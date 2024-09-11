@@ -31,7 +31,7 @@
 </head>
 <body>
     <h1>BLE UART Communication</h1>
-    <button id="scanButton">Scan</button>
+    <button id="scanButton" disabled>Scan</button>
     <button id="disconnectButton" disabled>Disconnect</button>
     <br><br>
     <input type="number" id="value1" placeholder="Value 1" min="0" step="1">
@@ -42,6 +42,11 @@
     <div id="messageDiv" class="message"></div>
 
     <script>
+        if (!navigator.bluetooth) {
+            document.getElementById('messageDiv').textContent = 'Web Bluetooth API is not supported on this browser.';
+            throw new Error('Web Bluetooth API is not supported on this browser.');
+        }
+
         const scanButton = document.getElementById('scanButton');
         const disconnectButton = document.getElementById('disconnectButton');
         const sendButton = document.getElementById('sendButton');
