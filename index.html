@@ -31,7 +31,7 @@
 </head>
 <body>
     <h1>BLE UART Communication</h1>
-    <button id="scanButton" disabled>Scan</button>
+    <button id="scanButton">Scan</button>
     <button id="disconnectButton" disabled>Disconnect</button>
     <br><br>
     <input type="number" id="value1" placeholder="Value 1" min="0" step="1">
@@ -42,11 +42,6 @@
     <div id="messageDiv" class="message"></div>
 
     <script>
-        if (!navigator.bluetooth) {
-            document.getElementById('messageDiv').textContent = 'Web Bluetooth API is not supported on this browser.';
-            throw new Error('Web Bluetooth API is not supported on this browser.');
-        }
-
         const scanButton = document.getElementById('scanButton');
         const disconnectButton = document.getElementById('disconnectButton');
         const sendButton = document.getElementById('sendButton');
@@ -74,8 +69,8 @@
                 const device = await navigator.bluetooth.requestDevice(options);
                 await connectToDevice(device);
             } catch (error) {
-                console.error('Error during scan:', error.message);
-                displayMessage('Error: Unable to scan for devices. ' + error.message);
+                console.error('Error during scan:', error);
+                displayMessage('Error: Unable to scan for devices.');
             }
         });
 
@@ -97,8 +92,8 @@
                 disconnectButton.disabled = false;
                 displayMessage('Connected to device.');
             } catch (error) {
-                console.error('Error during connection:', error.message);
-                displayMessage('Error: Unable to connect to device. ' + error.message);
+                console.error('Error during connection:', error);
+                displayMessage('Error: Unable to connect to device.');
             }
         }
 
@@ -116,8 +111,8 @@
                     displayMessage('Disconnected from device.');
                 }
             } catch (error) {
-                console.error('Error during disconnection:', error.message);
-                displayMessage('Error: Unable to disconnect from device. ' + error.message);
+                console.error('Error during disconnection:', error);
+                displayMessage('Error: Unable to disconnect from device.');
             }
         });
 
@@ -156,8 +151,8 @@
 
                 displayMessage(`Data sent successfully at ${timeString}.`);
             } catch (error) {
-                console.error('Error during data send:', error.message);
-                displayMessage('Error: Unable to send data. ' + error.message);
+                console.error('Error during data send:', error);
+                displayMessage('Error: Unable to send data.');
             }
         });
 
