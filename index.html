@@ -69,8 +69,8 @@
                 const device = await navigator.bluetooth.requestDevice(options);
                 await connectToDevice(device);
             } catch (error) {
-                console.error('Error during scan:', error);
-                displayMessage('Error: Unable to scan for devices.');
+                console.error('Error during scan:', error.message);
+                displayMessage('Error: Unable to scan for devices. ' + error.message);
             }
         });
 
@@ -78,9 +78,6 @@
             try {
                 device = selectedDevice;
                 displayMessage('Connecting to device...');
-
-                // Clear previous errors
-                console.clear();
 
                 server = await device.gatt.connect();
                 uartService = await server.getPrimaryService(UART_SERVICE_UUID);
@@ -95,8 +92,8 @@
                 disconnectButton.disabled = false;
                 displayMessage('Connected to device.');
             } catch (error) {
-                console.error('Error during connection:', error);
-                displayMessage('Error: Unable to connect to device.');
+                console.error('Error during connection:', error.message);
+                displayMessage('Error: Unable to connect to device. ' + error.message);
             }
         }
 
@@ -114,8 +111,8 @@
                     displayMessage('Disconnected from device.');
                 }
             } catch (error) {
-                console.error('Error during disconnection:', error);
-                displayMessage('Error: Unable to disconnect from device.');
+                console.error('Error during disconnection:', error.message);
+                displayMessage('Error: Unable to disconnect from device. ' + error.message);
             }
         });
 
@@ -141,7 +138,7 @@
                 data[2] = num2 & 0xFF;
                 data[3] = (num2 >> 8) & 0xFF;
                 data[4] = num3 & 0xFF;
-                data[5] = (num3 >> 8) & 0xFF;                
+                data[5] = (num3 >> 8) & 0xFF;
 
                 await txCharacteristic.writeValue(data);
 
@@ -154,8 +151,8 @@
 
                 displayMessage(`Data sent successfully at ${timeString}.`);
             } catch (error) {
-                console.error('Error during data send:', error);
-                displayMessage('Error: Unable to send data.');
+                console.error('Error during data send:', error.message);
+                displayMessage('Error: Unable to send data. ' + error.message);
             }
         });
 
