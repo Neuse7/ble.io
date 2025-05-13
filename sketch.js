@@ -178,7 +178,7 @@ scanButton.addEventListener('click', async () => {
 async function connectToDevice(selectedDevice) {
     try {
         device = selectedDevice;
-        displayMessage('接続中...');
+        displayMessage('Connecting...');
          
         server = await device.gatt.connect();
         uartService = await server.getPrimaryService(UART_SERVICE_UUID);
