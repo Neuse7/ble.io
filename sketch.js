@@ -156,7 +156,7 @@ function resetButtons() {
 // 接続が切れた場合の処理
 function handleDisconnection() {
     resetButtons();
-    displayMessage('デバイスが切断されました');
+    displayMessage('Device is disconnected');
 }
 		
 scanButton.addEventListener('click', async () => {
@@ -171,7 +171,7 @@ scanButton.addEventListener('click', async () => {
         await connectToDevice(device);
     } catch (error) {
         console.error('Error during scan:', error);
-        displayMessage('エラー: デバイスが見つかりませんでした');
+        displayMessage('Error: Not found');
     }
 });
 
@@ -195,10 +195,10 @@ async function connectToDevice(selectedDevice) {
 
         sendButton.disabled = false;
         disconnectButton.disabled = false;
-        displayMessage('接続完了');
+        displayMessage('Connection Complete');
     } catch (error) {
         console.error('Error during connection:', error);
-        displayMessage('エラー: デバイスと接続できませんでした');
+        displayMessage('Error: Failed to connect to the device');
     }
 }
 
@@ -215,14 +215,14 @@ disconnectButton.addEventListener('click', async () => {
         }
     } catch (error) {
         console.error('Error during disconnection:', error);
-        displayMessage('エラー: デバイスを切断できませんでした');
+        displayMessage('Error: Failed to connect to the device');
     }
 });
 
 sendButton.addEventListener('click', async () => {
     try {
         if (!rxCharacteristic) {
-            displayMessage('エラー: デバイスと接続できませんでした');
+            displayMessage('Error: Failed to connect to the device');
             return;
         }
 
@@ -231,7 +231,7 @@ sendButton.addEventListener('click', async () => {
         const num3 = parseInt(value3.value, 10) || 0;
 
         if (num1 < 0 || num1 > 65535 || num2 < 0 || num2 > 65535 || num3 < 0 || num3 > 65535) {
-            displayMessage('エラー: 入力不可の値が含まれています');
+            displayMessage('Error: Invalid value entered');
             return;
         }
 
@@ -249,10 +249,10 @@ sendButton.addEventListener('click', async () => {
         // Get current time
         const timeString = getCurrentTimeString();
 
-        displayMessage(`データ送信完了( ${timeString} )`);
+        displayMessage(`Data send complete( ${timeString} )`);
     } catch (error) {
         console.error('Error during data send:', error);
-        displayMessage('エラー: データ送信に失敗しました');
+        displayMessage('Error: Failed to send data');
     }
 });
 		
@@ -271,7 +271,7 @@ function handleDataReceived(event) {
         value3.value = num3;
     }
     else {
-        displayMessage('エラー: 不正なデータを受信しました');
+        displayMessage('Error: Invalid data received');
     }
 }
 
